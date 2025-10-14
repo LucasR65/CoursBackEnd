@@ -25,12 +25,6 @@ python main.py add "Acheter du pain" -d "Baguette si possible"
 # lister
 python main.py list
 
-# marquer comme fait (index 0-based)
-python main.py done 0
-
-# marquer comme non fait
-python main.py undone 0
-
 # supprimer
 python main.py remove 0
 

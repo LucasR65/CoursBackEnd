@@ -23,6 +23,7 @@ class TaskController:
                 data = json.load(f)
             self.tasks = [Task.from_dict(item) for item in data]
         except Exception:
+            # si fichier corrompu ou illisible, on reset
             self.tasks = []
 
     def _save(self) -> None:
@@ -41,19 +42,6 @@ class TaskController:
     def _valid_index(self, index: int) -> bool:
         return 0 <= index < len(self.tasks)
 
-    def mark_done(self, index: int) -> bool:
-        if not self._valid_index(index):
-            return False
-        self.tasks[index].mark_done()
-        self._save()
-        return True
-
-    def mark_undone(self, index: int) -> bool:
-        if not self._valid_index(index):
-            return False
-        self.tasks[index].mark_undone()
-        self._save()
-        return True
 
     def remove_task(self, index: int) -> bool:
         if not self._valid_index(index):
