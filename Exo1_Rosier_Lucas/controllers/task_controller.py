@@ -23,7 +23,6 @@ class TaskController:
                 data = json.load(f)
             self.tasks = [Task.from_dict(item) for item in data]
         except Exception:
-            # si fichier corrompu ou illisible, on reset
             self.tasks = []
 
     def _save(self) -> None:

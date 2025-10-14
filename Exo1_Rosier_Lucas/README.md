@@ -1,4 +1,4 @@
-# Exercice1-Nom-Prenom
+# Exercice1-Rosier_Lucas
 
 Mini API en ligne de commande (CLI) pour gérer une ToDoList.
 
@@ -39,5 +39,3 @@ python main.py clear
 ```
 
 Le stockage est persistant dans `data/tasks.json`.
-
--- Fin.
