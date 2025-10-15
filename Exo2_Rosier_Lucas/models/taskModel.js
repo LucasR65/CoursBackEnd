@@ -7,7 +7,7 @@ function loadTasks() {
   try {
     const data = fs.readFileSync(FILE_PATH, "utf8");
     return JSON.parse(data);
-  } catch (err) {
+  } catch {
     return [];
   }
 }
@@ -18,26 +18,19 @@ function saveTasks(tasks) {
 
 export default {
   getAll: () => loadTasks(),
-
   add: (title, description = "") => {
     const tasks = loadTasks();
-    const maxId = tasks.reduce((m, t) => Math.max(m, t.id || 0), 0);
-    const newTask = { id: maxId + 1, title, description };
+    const newTask = { title, description };
     tasks.push(newTask);
     saveTasks(tasks);
     return newTask;
   },
-
-  remove: (id) => {
+  remove: (index) => {
     const tasks = loadTasks();
-    const index = tasks.findIndex((t) => t.id === id);
-    if (index === -1) return false;
+    if (index < 0 || index >= tasks.length) return false;
     tasks.splice(index, 1);
     saveTasks(tasks);
     return true;
   },
-
-  clear: () => {
-    saveTasks([]);
-  }
+  clear: () => saveTasks([]),
 };
