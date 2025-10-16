@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", getTasks);
 router.post("/", addTask);
-router.delete("/:index", removeTask); // index-based comme en Python
+router.delete("/:id", removeTask);
 router.delete("/", clearTasks);
 
 export default router;

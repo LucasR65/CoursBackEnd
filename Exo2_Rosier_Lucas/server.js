@@ -2,24 +2,22 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
+connectDB(); 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// middlewares
-app.use(cors());           // autoriser CORS (tunables si besoin)
-app.use(express.json());   // parser JSON
+app.use(cors());
+app.use(express.json());
 
-// route racine
-app.get("/", (req, res) => {
-  res.send("Bienvenue sur l'API ToDoList Express 📝");
-});
-
-// routes
+app.get("/", (req, res) => res.send("Bienvenue sur l'API ToDoList Express + MongoDB 📝"));
 app.use("/tasks", taskRoutes);
 
 app.listen(PORT, () => {
-  console.log(`✅ Serveur en cours d'exécution sur http://localhost:${PORT}`);
+  console.log(`🚀 Serveur sur http://localhost:${PORT}`);
 });
+
+export default app;
