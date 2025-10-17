@@ -1,43 +1,43 @@
-// src/controllers/taskController.js
-import Task from "../models/taskModel.js";
+// controllers/taskController.js
+import TaskModel from "../models/taskModel.js";
 
-export const getTasks = async (req, res) => {
+export const getTasks = async (_req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await TaskModel.getAll();
     res.json(tasks);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
 export const addTask = async (req, res) => {
-  const { title, description = "" } = req.body;
-  if (!title) return res.status(400).json({ error: "Le champ 'title' est obligatoire." });
-
   try {
-    const task = await Task.create({ title, description });
+    const { title, description = "" } = req.body || {};
+    if (!title) return res.status(400).json({ error: "Le champ 'title' est obligatoire." });
+    const task = await TaskModel.add(title, description);
     res.status(201).json(task);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
 export const removeTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const task = await Task.findByIdAndDelete(id);
-    if (!task) return res.status(404).json({ error: "Tâche non trouvée." });
+    const id = Number(req.params.id);
+    if (Number.isNaN(id)) return res.status(400).json({ error: "ID invalide." });
+    const ok = await TaskModel.remove(id);
+    if (!ok) return res.status(404).json({ error: "Tâche introuvable." });
     res.json({ message: "Tâche supprimée." });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const clearTasks = async (req, res) => {
+export const clearTasks = async (_req, res) => {
   try {
-    await Task.deleteMany({});
+    await TaskModel.clear();
     res.json({ message: "Toutes les tâches ont été supprimées." });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
