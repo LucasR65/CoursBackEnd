@@ -1,26 +1,11 @@
-// models/taskModel.js
-import pool from "../config/db.js";
+// src/models/taskModel.js
+import mongoose from "mongoose";
 
-export default {
-  getAll: async () => {
-    const res = await pool.query("SELECT * FROM tasks ORDER BY id ASC");
-    return res.rows;
-  },
+const taskSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, default: "" },
+});
 
-  add: async (title, description = "") => {
-    const res = await pool.query(
-      "INSERT INTO tasks (title, description) VALUES ($1, $2) RETURNING *",
-      [title, description]
-    );
-    return res.rows[0];
-  },
+const Task = mongoose.model("Task", taskSchema);
 
-  remove: async (id) => {
-    const res = await pool.query("DELETE FROM tasks WHERE id = $1 RETURNING *", [id]);
-    return res.rowCount > 0;
-  },
-
-  clear: async () => {
-    await pool.query("DELETE FROM tasks");
-  },
-};
+export default Task;
