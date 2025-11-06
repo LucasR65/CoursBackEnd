@@ -1,4 +1,3 @@
-// src/controllers/taskController.js
 import Task from "../models/taskModel.js";
 
 export const getTasks = async (req, res) => {

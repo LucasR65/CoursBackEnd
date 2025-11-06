@@ -5,8 +5,8 @@ API ToDoList simple en Express (architecture MVC).
 ## Commandes utiles
 
 - `npm install` : installe les dépendances (express, nodemon)
-- `npm run dev` : lance le serveur en mode développement (nodemon)
-- `npm start` : lance le serveur (node)
+- `npm run dev:mongo` : lance le serveur avec bdd mongo
+- `npm run dev:pg` : lance le serveur avec bdd postgres
 
 ## Routes
 
