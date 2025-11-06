@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API ToDoList",
+    "version": "1.0.0",
+    "description": "API ToDoList simple"
+  },
+  "servers": [
+    { "url": "http://localhost:5000", "description": "Local server" }
+  ],
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["title"]
+      }
+    }
+  },
+  "paths": {
+    "/tasks": {
+      "get": {
+        "summary": "Récupère toutes les tâches",
+        "responses": {
+          "200": {
+            "description": "Liste des tâches",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Task" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crée une tâche",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } }
+        },
+        "responses": { "201": { "description": "Tâche créée" } }
+      },
+      "delete": {
+        "summary": "Supprime toutes les tâches",
+        "responses": { "200": { "description": "Toutes les tâches supprimées" } }
+      }
+    },
+    "/tasks/{id}": {
+      "delete": {
+        "summary": "Supprime une tâche par ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Tâche supprimée" }, "404": { "description": "Tâche non trouvée" } }
+      }
+    }
+  }
+}
