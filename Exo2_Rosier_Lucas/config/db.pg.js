@@ -10,10 +10,10 @@ export const connectPG = async () => {
     });
 
     await pool.connect();
-    console.log("✅ PostgreSQL connecté !");
+    console.log("PostgreSQL connecté !");
     return pool;
   } catch (error) {
-    console.error("❌ Erreur connexion PostgreSQL :", error.message);
+    console.error("Erreur connexion PostgreSQL :", error.message);
     process.exit(1);
   }
 };
