@@ -18,6 +18,29 @@
           "description": { "type": "string" }
         },
         "required": ["title"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["email","password"]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "userId": { "type": "string" },
+              "email": { "type": "string" },
+              "token": { "type": "string" }
+            }
+          }
+        }
       }
     }
   },
@@ -54,6 +77,26 @@
         "summary": "Supprime une tâche par ID",
         "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "responses": { "200": { "description": "Tâche supprimée" }, "404": { "description": "Tâche non trouvée" } }
+      }
+    },
+    "/api/users/signup": {
+      "post": {
+        "summary": "Créer un nouvel utilisateur",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } }
+        },
+        "responses": { "201": { "description": "Utilisateur créé avec succès", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } } }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "summary": "Connexion utilisateur",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } }
+        },
+        "responses": { "200": { "description": "Connexion réussie", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } } }
       }
     }
   }
