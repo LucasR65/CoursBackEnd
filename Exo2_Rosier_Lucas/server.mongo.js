@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import swaggerUi from "swagger-ui-express";
 import { createRequire } from "module";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -28,6 +29,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/tasks", taskRoutes);
+
+// Routes publiques utilisateurs
+app.use("/api/users", userRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Serveur sur http://localhost:${PORT}`);
